@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset mínimo compartilhado — cada rota (landing, auth) traz seu próprio
+   CSS completo (landing.css / auth.css), copiado como está do design original. */
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+/*
+ * Correção do "pull-to-refresh" mobile (Android/iOS):
+ * Sem isso, ao puxar a tela para baixo no topo da página, o navegador
+ * revela o fundo real da janela (branco por padrão) por trás do conteúdo,
+ * o que aparece como uma faixa preta/branca porque nosso app é escuro.
+ * - overscroll-behavior-y:none remove o "bounce"/rubber-banding que causa isso.
+ * - background-color igual ao fundo do app garante que, mesmo que algo
+ *   vaze por baixo, a cor seja a mesma (nunca branco).
+ * - height:100% + overflow-x:hidden evita scroll horizontal indesejado.
+ */
+html {
+  height: 100%;
+  overscroll-behavior-y: none;
+  background-color: #08080a;
+}
+
+body {
+  min-height: 100%;
+  overscroll-behavior-y: none;
+  overflow-x: hidden;
+  background-color: #08080a;
+  /* impede o zoom acidental por double-tap em botões/links no iOS/Android */
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+}

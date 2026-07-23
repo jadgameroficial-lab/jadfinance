@@ -1,0 +1,12 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="pagbank">
+  <defs>
+    <linearGradient id="g-pagbank" x1="4" y1="2" x2="36" y2="38" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00C650"/>
+      <stop offset="1" stop-color="#008E39"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="38" height="38" rx="11" fill="url(#g-pagbank)"/>
+  <rect x="1" y="1" width="38" height="38" rx="11" fill="white" fill-opacity="0.04"/>
+  <rect x="1.5" y="1.5" width="37" height="19" rx="10.5" fill="white" fill-opacity="0.08"/>
+  <text x="20" y="24.5" text-anchor="middle" font-family="Sora, Arial, sans-serif" font-weight="700" font-size="13.5" letter-spacing="-0.02em" fill="#FFFFFF">PB</text>
+</svg>
