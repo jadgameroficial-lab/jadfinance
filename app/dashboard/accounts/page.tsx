@@ -9,6 +9,7 @@ import { accountsService, type AccountRow } from "@/services/accounts.service";
 import { ConfirmDialog } from "@/components/dashboard/ConfirmDialog";
 import { Skeleton } from "@/components/dashboard/Skeleton";
 import { BankLogo } from "@/components/dashboard/BankLogo";
+import { CardMenu } from "@/components/dashboard/CardMenu";
 import { useToast } from "@/lib/toast";
 
 const AccountFormDrawer = dynamic(
@@ -103,14 +104,21 @@ export default function AccountsPage() {
           <div key={acc.id} className="dash-kpi dash-reveal" style={{ animationDelay: `${Math.min(i, 8) * 0.05}s` }}>
             <div className="dash-kpi-top">
               <BankLogo bankId={acc.icon} size={36} />
-              <div className="dash-row-actions">
-                <button aria-label="Editar" type="button" onClick={() => { setEditing(acc); setEverOpened(true); setDrawerOpen(true); }}>
-                  <Pencil size={13} strokeWidth={2} />
-                </button>
-                <button aria-label="Excluir" type="button" onClick={() => setDeleteTarget(acc)}>
-                  <Trash2 size={13} strokeWidth={2} />
-                </button>
-              </div>
+              <CardMenu
+                actions={[
+                  {
+                    label: "Editar",
+                    icon: <Pencil size={13} strokeWidth={2} />,
+                    onClick: () => { setEditing(acc); setEverOpened(true); setDrawerOpen(true); },
+                  },
+                  {
+                    label: "Excluir",
+                    icon: <Trash2 size={13} strokeWidth={2} />,
+                    onClick: () => setDeleteTarget(acc),
+                    danger: true,
+                  },
+                ]}
+              />
             </div>
             <div className="dash-kpi-label">{acc.type}</div>
             <div style={{ fontFamily: "var(--display)", fontWeight: 700, fontSize: 15, marginBottom: 8 }}>{acc.name}</div>

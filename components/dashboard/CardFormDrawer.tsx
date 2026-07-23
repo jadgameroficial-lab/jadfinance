@@ -5,8 +5,8 @@ import { X } from "lucide-react";
 import { cardsService, type CardRow } from "@/services/cards.service";
 import { useAccounts } from "@/hooks/useAccounts";
 import { useToast } from "@/lib/toast";
-import { CARD_BRANDS, getCardBrandByName } from "@/lib/bank-logos";
-import { BankBadge } from "@/components/dashboard/BankBadge";
+import { CARD_BRANDS } from "@/lib/bank-logos";
+import { AccountSelect } from "@/components/dashboard/AccountSelect";
 
 export function CardFormDrawer({
   open,
@@ -29,8 +29,6 @@ export function CardFormDrawer({
   const [accountId, setAccountId] = useState("");
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
-
-  const selectedBrand = getCardBrandByName(brand);
 
   useEffect(() => {
     if (!open) return;
@@ -112,20 +110,24 @@ export function CardFormDrawer({
 
         <form onSubmit={handleSubmit}>
           <div className="dash-d-field">
-            <label>Nome</label>
-            <input type="text" placeholder="Ex: Cartão Nubank" value={name} onChange={(e) => setName(e.target.value)} required />
+            <label>Conta / banco vinculado</label>
+            <AccountSelect accounts={accounts} value={accountId} onChange={setAccountId} />
+            <p style={{ fontSize: 11, color: "var(--text-ter)", marginTop: 6 }}>
+              O cartão é exibido com o logo e o nome do banco da conta selecionada.
+            </p>
+          </div>
+          <div className="dash-d-field">
+            <label>Nome do cartão</label>
+            <input type="text" placeholder="Ex: Cartão Platinum" value={name} onChange={(e) => setName(e.target.value)} required />
           </div>
           <div className="dash-d-field">
             <label>Bandeira</label>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              {selectedBrand && <BankBadge initials={selectedBrand.initials} color={selectedBrand.color} size={40} />}
-              <select value={brand} onChange={(e) => setBrand(e.target.value)} style={{ flex: 1 }}>
-                <option value="">Selecione a bandeira (opcional)</option>
-                {CARD_BRANDS.map((b) => (
-                  <option key={b.slug} value={b.name}>{b.name}</option>
-                ))}
-              </select>
-            </div>
+            <select value={brand} onChange={(e) => setBrand(e.target.value)}>
+              <option value="">Selecione a bandeira (opcional)</option>
+              {CARD_BRANDS.map((b) => (
+                <option key={b.slug} value={b.name}>{b.name}</option>
+              ))}
+            </select>
           </div>
           <div className="dash-d-field">
             <label>Limite</label>
@@ -138,15 +140,6 @@ export function CardFormDrawer({
           <div className="dash-d-field">
             <label>Dia de vencimento</label>
             <input type="number" min={1} max={31} value={dueDay} onChange={(e) => setDueDay(e.target.value)} />
-          </div>
-          <div className="dash-d-field">
-            <label>Conta vinculada</label>
-            <select value={accountId} onChange={(e) => setAccountId(e.target.value)}>
-              <option value="">Nenhuma</option>
-              {accounts.map((a) => (
-                <option key={a.id} value={a.id}>{a.name}</option>
-              ))}
-            </select>
           </div>
 
           {formError && (

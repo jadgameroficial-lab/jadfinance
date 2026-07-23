@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { Plus, Pencil, Trash2, CreditCard } from "lucide-react";
+import { Plus, CreditCard, Pencil, Trash2 } from "lucide-react";
 import { useCards } from "@/hooks/useCards";
 import { useAccounts } from "@/hooks/useAccounts";
 import { cardsService, type CardRow } from "@/services/cards.service";
 import { ConfirmDialog } from "@/components/dashboard/ConfirmDialog";
 import { Skeleton } from "@/components/dashboard/Skeleton";
-import { BankBadge } from "@/components/dashboard/BankBadge";
-import { getCardBrandByName } from "@/lib/bank-logos";
+import { BankLogo } from "@/components/dashboard/BankLogo";
+import { CardMenu } from "@/components/dashboard/CardMenu";
+import { getBankById } from "@/lib/banks";
 import { useToast } from "@/lib/toast";
 
 const CardFormDrawer = dynamic(
@@ -86,32 +87,49 @@ export default function CardsPage() {
             </div>
           </div>
         )}
-        {cards.map((card, i) => (
+        {cards.map((card, i) => {
+          const account = card.account_id ? accountById.get(card.account_id) : undefined;
+          const bank = getBankById(account?.icon);
+          return (
           <div key={card.id} className="dash-kpi dash-reveal" style={{ animationDelay: `${Math.min(i, 8) * 0.05}s` }}>
             <div className="dash-kpi-top">
-              <div className="dash-kpi-icon" style={{ background: "var(--blue-dim)" }}>
-                <CreditCard size={18} strokeWidth={1.8} color="var(--blue)" />
-              </div>
-              <div className="dash-row-actions">
-                <button aria-label="Editar" type="button" onClick={() => { setEditing(card); setEverOpened(true); setDrawerOpen(true); }}>
-                  <Pencil size={13} strokeWidth={2} />
-                </button>
-                <button aria-label="Excluir" type="button" onClick={() => setDeleteTarget(card)}>
-                  <Trash2 size={13} strokeWidth={2} />
-                </button>
-              </div>
+              {bank ? (
+                <BankLogo bankId={account?.icon} size={36} />
+              ) : (
+                <div className="dash-kpi-icon" style={{ background: "var(--blue-dim)" }}>
+                  <CreditCard size={18} strokeWidth={1.8} color="var(--blue)" />
+                </div>
+              )}
+              <CardMenu
+                actions={[
+                  {
+                    label: "Editar",
+                    icon: <Pencil size={13} strokeWidth={2} />,
+                    onClick: () => { setEditing(card); setEverOpened(true); setDrawerOpen(true); },
+                  },
+                  {
+                    label: "Excluir",
+                    icon: <Trash2 size={13} strokeWidth={2} />,
+                    onClick: () => setDeleteTarget(card),
+                    danger: true,
+                  },
+                ]}
+              />
             </div>
-            <div className="dash-kpi-label">{card.brand ?? "Cartão de crédito"}</div>
+            <div className="dash-kpi-label">{bank?.name ?? "Sem conta vinculada"}</div>
             <div style={{ fontFamily: "var(--display)", fontWeight: 700, fontSize: 15, marginBottom: 8 }}>{card.name}</div>
             <div className="dash-kpi-value">
               {card.limit_value != null ? `R$ ${currency(Number(card.limit_value))}` : "Sem limite definido"}
             </div>
-            <div style={{ fontSize: 11.5, color: "var(--text-ter)", marginTop: 6 }}>
-              {card.account_id && accountById.get(card.account_id) ? `Conta: ${accountById.get(card.account_id)!.name} · ` : ""}
-              Fecha dia {card.closing_day ?? "—"}, vence dia {card.due_day ?? "—"}
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 6 }}>
+              {card.brand && <span className="card-brand-chip">{card.brand}</span>}
+              <span style={{ fontSize: 11.5, color: "var(--text-ter)" }}>
+                Fecha dia {card.closing_day ?? "—"}, vence dia {card.due_day ?? "—"}
+              </span>
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
 
       {everOpened && (

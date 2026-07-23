@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Wallet, TrendingUp, TrendingDown, LineChart as LineChartIcon, LogOut } from "lucide-react";
+import { Wallet, TrendingUp, TrendingDown, PiggyBank, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { authService } from "@/services/auth.service";
 import { useDashboardData } from "@/hooks/useDashboardData";
@@ -105,9 +105,9 @@ export default function DashboardPage() {
           spark={expenseSpark} delay={0.15} sheenDelay={1.4} loading={loading}
         />
         <KpiCard
-          label="Lucro" value={loading ? 0 : Math.round(data?.kpis.monthProfit ?? 0)}
+          label="Economia do mês" value={loading ? 0 : Math.round(data?.kpis.monthProfit ?? 0)}
           delta={formatPct(profitDelta)} direction={profitDelta >= 0 ? "up" : "down"} color="var(--blue)"
-          icon={<LineChartIcon size={18} strokeWidth={1.8} color="var(--blue)" />}
+          icon={<PiggyBank size={18} strokeWidth={1.8} color="var(--blue)" />}
           spark={profitSpark} delay={0.2} sheenDelay={2.2} loading={loading}
         />
       </div>

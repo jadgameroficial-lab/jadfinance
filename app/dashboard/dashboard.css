@@ -324,6 +324,24 @@
 .bank-select-option.active{ background:var(--gold-dim); color:var(--gold); font-weight:600; }
 .bank-select-option-empty{ width:26px; height:26px; border-radius:8px; border:1px dashed var(--border-strong); flex-shrink:0; }
 
+/* ================= CARD MENU (kebab ⋮) ================= */
+.card-menu{ position:relative; }
+.card-menu-trigger{ width:30px; height:30px; border-radius:9px; border:1px solid var(--border); background:var(--surface-1);
+  display:flex; align-items:center; justify-content:center; color:var(--text-sec);
+  transition:transform .2s var(--ease-spring), background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease); }
+.card-menu-trigger:hover{ color:var(--white); background:var(--surface-3); border-color:var(--border-strong); }
+.card-menu-trigger:active{ transform:scale(0.9); }
+.card-menu-list{ position:absolute; z-index:20; top:calc(100% + 6px); right:0; min-width:168px;
+  background:var(--surface-3); border:1px solid var(--border-strong); border-radius:12px; padding:6px;
+  box-shadow:0 12px 32px rgba(0,0,0,0.45); animation:dashConfirmFade .15s var(--ease); }
+.card-menu-item{ width:100%; display:flex; align-items:center; gap:9px; padding:8px 10px; border-radius:9px;
+  color:var(--text-sec); font-size:12.8px; text-align:left; transition:background .2s var(--ease), color .2s var(--ease); }
+.card-menu-item:hover{ background:rgba(255,255,255,0.05); color:var(--white); }
+.card-menu-item.danger{ color:var(--red); }
+.card-menu-item.danger:hover{ background:var(--red-dim); color:var(--red); }
+.card-brand-chip{ font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text-sec);
+  background:var(--surface-3); border:1px solid var(--border); border-radius:100px; padding:2px 9px; white-space:nowrap; }
+
 @keyframes dashConfirmFade{ from{ opacity:0; } to{ opacity:1; } }
 @keyframes dashConfirmPop{ from{ opacity:0; transform:scale(0.94) translateY(6px); } to{ opacity:1; transform:scale(1) translateY(0); } }
 
