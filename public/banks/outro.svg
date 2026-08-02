@@ -1,0 +1,15 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="outro">
+  <defs>
+    <linearGradient id="g-outro" x1="4" y1="2" x2="36" y2="38" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E8C46A"/>
+      <stop offset="1" stop-color="#B9862E"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="38" height="38" rx="11" fill="url(#g-outro)"/>
+  <rect x="1.5" y="1.5" width="37" height="18" rx="10.5" fill="white" fill-opacity="0.07"/>
+  <g transform="translate(8,8)" color="#191200">
+    <path d="M2 9L12 3L22 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M4 9H20V20H4V9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
+    <path d="M2 20H22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+</svg>
