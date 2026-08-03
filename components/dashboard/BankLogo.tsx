@@ -52,7 +52,7 @@ export function BankLogo({
         justifyContent: "center",
         flexShrink: 0,
         overflow: "hidden",
-        boxShadow: "0 1px 0 rgba(255,255,255,0.08) inset, 0 4px 12px rgba(0,0,0,0.25)",
+        boxShadow: "0 1px 0 rgba(255,255,255,0.5) inset, 0 4px 10px rgba(18,22,31,0.12)",
       }}
     >
       {config && !failed ? (

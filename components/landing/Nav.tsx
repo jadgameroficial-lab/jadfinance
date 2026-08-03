@@ -70,7 +70,8 @@ export function Nav() {
         <div
           style={{
             position: "fixed", top: 84, left: 20, right: 20, zIndex: 99,
-            background: "rgba(12,12,14,0.96)", border: "1px solid var(--border-strong)",
+            background: "rgba(255,255,255,0.97)", border: "1px solid var(--border-strong)",
+            boxShadow: "0 24px 48px -20px rgba(18,22,31,0.2)",
             borderRadius: 20, padding: 22, display: "flex", flexDirection: "column", gap: 4,
             backdropFilter: "blur(20px)",
           }}

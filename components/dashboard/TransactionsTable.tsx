@@ -141,7 +141,7 @@ function TransactionsTableBase({
       )}
 
       {error && (
-        <div style={{ padding: "0 24px 18px", color: "#f16565", fontSize: 13 }}>
+        <div style={{ padding: "0 24px 18px", color: "#D6483D", fontSize: 13 }}>
           Não foi possível carregar as transações: {error}
         </div>
       )}

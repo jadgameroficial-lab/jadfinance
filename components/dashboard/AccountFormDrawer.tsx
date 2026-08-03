@@ -132,7 +132,7 @@ export function AccountFormDrawer({
           </p>
 
           {formError && (
-            <div style={{ color: "#f16565", fontSize: 12.5, marginBottom: 12, marginTop: -6 }}>{formError}</div>
+            <div style={{ color: "#D6483D", fontSize: 12.5, marginBottom: 12, marginTop: -6 }}>{formError}</div>
           )}
 
           <button type="submit" className="dash-btn-gold" disabled={saving} style={{ width: "100%", justifyContent: "center", marginTop: 8, opacity: saving ? 0.7 : 1 }}>

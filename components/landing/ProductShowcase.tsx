@@ -77,22 +77,22 @@ export function ProductShowcase() {
                   <div className="jf-s-panel">
                     <div style={{ fontSize: 12.5, color: "var(--text-secondary)", marginBottom: 14 }}>Fluxo mensal</div>
                     <svg width="100%" height="140" viewBox="0 0 300 140" preserveAspectRatio="none">
-                      <polyline points="0,110 40,90 80,100 120,60 160,75 200,30 240,50 300,20" fill="none" stroke="#E8C46A" strokeWidth="2.5" />
+                      <polyline points="0,110 40,90 80,100 120,60 160,75 200,30 240,50 300,20" fill="none" stroke="#AD7C24" strokeWidth="2.5" />
                       <polyline points="0,110 40,90 80,100 120,60 160,75 200,30 240,50 300,20 300,140 0,140" fill="url(#showcaseGrad)" stroke="none" />
                       <defs>
                         <linearGradient id="showcaseGrad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#E8C46A" stopOpacity="0.25" />
-                          <stop offset="100%" stopColor="#E8C46A" stopOpacity="0" />
+                          <stop offset="0%" stopColor="#AD7C24" stopOpacity="0.22" />
+                          <stop offset="100%" stopColor="#AD7C24" stopOpacity="0" />
                         </linearGradient>
                       </defs>
                     </svg>
                   </div>
                   <div className="jf-s-panel" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <svg width="140" height="140" viewBox="0 0 42 42" style={{ transform: "rotate(-90deg)" }}>
-                      <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#1b1c21" strokeWidth="6" />
-                      <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#9C8CFF" strokeWidth="6" strokeDasharray="40 60" strokeDashoffset="25" />
-                      <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#E8C46A" strokeWidth="6" strokeDasharray="30 70" strokeDashoffset="-15" />
-                      <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#3ECF8E" strokeWidth="6" strokeDasharray="20 80" strokeDashoffset="-45" />
+                      <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#E4E7EC" strokeWidth="6" />
+                      <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#6E4FD1" strokeWidth="6" strokeDasharray="40 60" strokeDashoffset="25" />
+                      <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#AD7C24" strokeWidth="6" strokeDasharray="30 70" strokeDashoffset="-15" />
+                      <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#1C8F5C" strokeWidth="6" strokeDasharray="20 80" strokeDashoffset="-45" />
                     </svg>
                   </div>
                 </div>

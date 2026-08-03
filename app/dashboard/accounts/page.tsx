@@ -77,7 +77,7 @@ export default function AccountsPage() {
         </div>
       </div>
 
-      {error && <div style={{ color: "#f16565", fontSize: 13, marginBottom: 20 }}>Não foi possível carregar as contas: {error}</div>}
+      {error && <div style={{ color: "#D6483D", fontSize: 13, marginBottom: 20 }}>Não foi possível carregar as contas: {error}</div>}
 
       <div className="dash-kpi-grid" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
         {loading && accounts.length === 0 && (

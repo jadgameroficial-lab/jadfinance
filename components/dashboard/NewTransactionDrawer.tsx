@@ -232,7 +232,7 @@ export function NewTransactionDrawer({
           </div>
 
           {formError && (
-            <div style={{ color: "#f16565", fontSize: 12.5, marginBottom: 12, marginTop: -6 }}>
+            <div style={{ color: "#D6483D", fontSize: 12.5, marginBottom: 12, marginTop: -6 }}>
               {formError}
             </div>
           )}

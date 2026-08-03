@@ -24,9 +24,9 @@ const KIND_ICON: Record<ToastKind, ReactNode> = {
 };
 
 const KIND_COLOR: Record<ToastKind, string> = {
-  success: "#3ecf8e",
-  error: "#f16565",
-  info: "#e8c46a",
+  success: "#1C8F5C",
+  error: "#D6483D",
+  info: "#AD7C24",
 };
 
 export function ToastProvider({ children }: { children: ReactNode }) {
@@ -79,10 +79,10 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               borderRadius: 12,
               fontSize: 13,
               lineHeight: 1.4,
-              color: "#f4f2ee",
-              background: "#17171c",
-              border: `1px solid ${KIND_COLOR[t.kind]}55`,
-              boxShadow: "0 14px 34px rgba(0,0,0,0.45)",
+              color: "#12161C",
+              background: "#FFFFFF",
+              border: `1px solid ${KIND_COLOR[t.kind]}45`,
+              boxShadow: "0 14px 30px -10px rgba(18,22,31,0.2)",
               animation: "dashToastIn .3s ease",
             }}
           >
@@ -94,7 +94,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               style={{
                 background: "none",
                 border: "none",
-                color: "#8a8a92",
+                color: "#8B93A1",
                 cursor: "pointer",
                 padding: 2,
                 flexShrink: 0,

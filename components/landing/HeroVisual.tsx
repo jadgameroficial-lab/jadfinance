@@ -46,7 +46,7 @@ export function HeroVisual() {
           <div className="jf-hcard-label">Saldo total</div>
           <div className="jf-hcard-value gold">R$ 84.210</div>
           <svg className="jf-hcard-spark" width="100%" height="36" viewBox="0 0 240 36" preserveAspectRatio="none">
-            <polyline points="0,28 30,22 60,26 90,14 120,18 150,7 180,12 210,4 240,9" fill="none" stroke="#E8C46A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <polyline points="0,28 30,22 60,26 90,14 120,18 150,7 180,12 210,4 240,9" fill="none" stroke="#AD7C24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
 
@@ -57,7 +57,7 @@ export function HeroVisual() {
         </div>
 
         <div className="jf-hcard jf-hcard--chip jf-float" style={{ animationDelay: "2.4s", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <Wallet size={22} strokeWidth={1.5} color="#E8C46A" />
+          <Wallet size={22} strokeWidth={1.5} color="#AD7C24" />
         </div>
       </div>
     </div>

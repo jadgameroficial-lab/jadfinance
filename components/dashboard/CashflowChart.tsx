@@ -117,8 +117,8 @@ function CashflowChartBase({ data, loading }: { data: CashflowPoint[]; loading?:
             position: "absolute", top: 0, pointerEvents: "none",
             left: `${(toX(hover ?? data.length - 1) / width) * 100}%`,
             transform: hover !== null && hover > data.length - 2 ? "translateX(-100%)" : "translateX(8px)",
-            background: "var(--surface-3)", border: "1px solid var(--border-strong)", borderRadius: 10,
-            padding: "7px 11px", fontSize: 11.5, fontFamily: "var(--mono)", boxShadow: "0 10px 24px rgba(0,0,0,0.4)",
+            background: "var(--surface-1)", border: "1px solid var(--border-strong)", borderRadius: 10,
+            padding: "7px 11px", fontSize: 11.5, fontFamily: "var(--mono)", boxShadow: "0 10px 24px rgba(18,22,31,0.16)",
             whiteSpace: "nowrap",
           }}
         >

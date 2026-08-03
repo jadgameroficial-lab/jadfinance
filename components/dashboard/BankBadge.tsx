@@ -23,7 +23,7 @@ export function BankBadge({
         fontSize: size * 0.36,
         letterSpacing: "-0.02em",
         flexShrink: 0,
-        boxShadow: "0 1px 0 rgba(255,255,255,0.25) inset, 0 4px 12px rgba(0,0,0,0.25)",
+        boxShadow: "0 1px 0 rgba(255,255,255,0.3) inset, 0 4px 10px rgba(18,22,31,0.14)",
       }}
     >
       {initials}

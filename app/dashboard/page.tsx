@@ -80,7 +80,7 @@ export default function DashboardPage() {
       </div>
 
       {error && (
-        <div style={{ color: "#f16565", fontSize: 13, marginBottom: 20 }}>
+        <div style={{ color: "#D6483D", fontSize: 13, marginBottom: 20 }}>
           Não foi possível carregar os dados do dashboard: {error}
         </div>
       )}

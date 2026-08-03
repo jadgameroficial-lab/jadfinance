@@ -147,7 +147,7 @@ export function CommandPaletteProvider({ children }: { children: ReactNode }) {
           onClick={close}
           style={{
             position: "fixed", inset: 0, zIndex: 9999,
-            background: "rgba(6,6,8,0.65)", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
+            background: "rgba(15,18,24,0.42)", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
             display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "14vh 20px 20px",
             animation: "dashConfirmFade .15s ease",
           }}
@@ -155,10 +155,10 @@ export function CommandPaletteProvider({ children }: { children: ReactNode }) {
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              width: "100%", maxWidth: 560, background: "rgba(21,21,25,0.92)",
+              width: "100%", maxWidth: 560, background: "rgba(255,255,255,0.94)",
               backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
               border: "1px solid var(--border-strong)", borderRadius: 16,
-              boxShadow: "0 30px 80px rgba(0,0,0,0.55)", overflow: "hidden",
+              boxShadow: "0 30px 70px -20px rgba(18,22,31,0.22)", overflow: "hidden",
               animation: "dashConfirmPop .2s var(--ease-spring)",
             }}
           >

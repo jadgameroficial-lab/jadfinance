@@ -65,7 +65,7 @@ export default function CardsPage() {
         </div>
       </div>
 
-      {error && <div style={{ color: "#f16565", fontSize: 13, marginBottom: 20 }}>Não foi possível carregar os cartões: {error}</div>}
+      {error && <div style={{ color: "#D6483D", fontSize: 13, marginBottom: 20 }}>Não foi possível carregar os cartões: {error}</div>}
 
       <div className="dash-kpi-grid" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
         {loading && cards.length === 0 && (
