@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "JAD FINANCE — Controle Financeiro Premium",
   description:
     "Controle suas finanças com uma plataforma premium: fluxo de caixa em tempo real, metas, orçamentos e relatórios inteligentes. Comece grátis, sem cartão de crédito.",
-  icons: { icon: "/logo.png" },
+  icons: { icon: "/favicon.png" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

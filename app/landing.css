@@ -147,8 +147,8 @@ html { scroll-behavior: smooth; }
 }
 .jf-nav.scrolled { background: rgba(255, 255, 255, 0.88); border-color: var(--border-strong); box-shadow: 0 16px 36px -16px rgba(18,22,31,0.16); }
 .jf-logo { display: flex; align-items: center; gap: 10px; }
-.jf-logo-mark { width: 28px; height: 28px; border-radius: 8px; overflow: hidden; flex-shrink: 0; }
-.jf-logo-mark img { width: 100%; height: 100%; object-fit: cover; }
+.jf-logo-mark { width: 28px; height: 28px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background: #0B1712; display: flex; align-items: center; justify-content: center; padding: 4px; }
+.jf-logo-mark img { width: 100%; height: 100%; object-fit: contain; }
 .jf-logo-word { font-family: var(--font-display, "Fraunces", serif); font-weight: 600; font-size: 15px; letter-spacing: 0.01em; }
 .jf-nav-links { display: flex; align-items: center; gap: 30px; font-size: 13.5px; color: var(--text-secondary); }
 .jf-nav-links a { transition: color 0.25s var(--ease); }

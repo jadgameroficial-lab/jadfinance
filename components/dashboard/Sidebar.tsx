@@ -1,63 +1,35 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  LayoutGrid, ArrowLeftRight, TrendingUp, TrendingDown, Tag,
-  Landmark, CreditCard, Target, LineChart, CalendarDays, Repeat,
-  FileText, FileDown, Download, Settings, ChevronLeft,
+  LayoutGrid, ArrowLeftRight, Landmark, CreditCard, Tag,
+  Target, ShieldCheck, LineChart, Repeat, Building2,
+  BarChart3, LayoutDashboard, Activity, TrendingUp, TrendingDown,
+  FileDown, Download, Settings, ChevronLeft, ChevronDown, Wallet,
 } from "lucide-react";
 import { transactionsService } from "@/services/transactions.service";
 import { useToast } from "@/lib/toast";
 
-type NavItem = {
+/**
+ * Estrutura de navegação da sidebar.
+ * - "link": item simples que navega para uma rota.
+ * - "action": item que dispara uma função (ex: exportar CSV/PDF) em vez de navegar.
+ * Grupos ("group") são expansíveis; itens fora de grupo (Dashboard, Patrimônio)
+ * permanecem sempre simples, conforme solicitado.
+ */
+type NavLink = { kind: "link"; label: string; icon: React.ReactNode; href: string };
+type NavAction = { kind: "action"; label: string; icon: React.ReactNode; onClick: () => void };
+type GroupChild = NavLink | NavAction;
+
+type NavGroup = {
+  kind: "group";
+  id: string;
   label: string;
   icon: React.ReactNode;
-  href: string;
+  children: GroupChild[];
 };
-
-type NavSection = {
-  label: string;
-  items: NavItem[];
-};
-
-const SECTIONS: NavSection[] = [
-  {
-    label: "Visão geral",
-    items: [{ label: "Dashboard", icon: <LayoutGrid size={18} strokeWidth={1.8} />, href: "/dashboard" }],
-  },
-  {
-    label: "Financeiro",
-    items: [
-      { label: "Transações", icon: <ArrowLeftRight size={18} strokeWidth={1.8} />, href: "/dashboard/transactions" },
-      { label: "Receitas", icon: <TrendingUp size={18} strokeWidth={1.8} />, href: "/dashboard/transactions?type=income" },
-      { label: "Despesas", icon: <TrendingDown size={18} strokeWidth={1.8} />, href: "/dashboard/transactions?type=expense" },
-      { label: "Categorias", icon: <Tag size={18} strokeWidth={1.8} />, href: "/dashboard/categories" },
-    ],
-  },
-  {
-    label: "Contas",
-    items: [
-      { label: "Contas", icon: <Landmark size={18} strokeWidth={1.8} />, href: "/dashboard/accounts" },
-      { label: "Cartões", icon: <CreditCard size={18} strokeWidth={1.8} />, href: "/dashboard/cards" },
-    ],
-  },
-  {
-    label: "Planejamento",
-    items: [
-      { label: "Metas", icon: <Target size={18} strokeWidth={1.8} />, href: "/dashboard/goals" },
-      { label: "Investimentos", icon: <LineChart size={18} strokeWidth={1.8} />, href: "/dashboard/investments" },
-      { label: "Calendário", icon: <CalendarDays size={18} strokeWidth={1.8} />, href: "/dashboard/calendar" },
-      { label: "Assinaturas", icon: <Repeat size={18} strokeWidth={1.8} />, href: "/dashboard/subscriptions" },
-    ],
-  },
-  {
-    label: "Outros",
-    items: [
-      { label: "Relatórios", icon: <FileText size={18} strokeWidth={1.8} />, href: "/dashboard/reports" },
-    ],
-  },
-];
 
 function isActive(pathname: string, currentSearch: string, href: string) {
   const [hrefPath, hrefQuery = ""] = href.split("?");
@@ -67,11 +39,15 @@ function isActive(pathname: string, currentSearch: string, href: string) {
     return pathname.startsWith(hrefPath + "/");
   }
 
-  // Mesma rota: itens como Transações/Receitas/Despesas compartilham o
-  // mesmo pathname e só se diferenciam pelo parâmetro "type" da URL.
+  // Mesma rota: itens que compartilham o mesmo pathname só se diferenciam
+  // pelo parâmetro "type" da URL.
   const hrefType = new URLSearchParams(hrefQuery).get("type");
   const currentType = new URLSearchParams(currentSearch).get("type");
   return hrefType === currentType;
+}
+
+function groupContainsActive(group: NavGroup, pathname: string, currentSearch: string) {
+  return group.children.some((c) => c.kind === "link" && isActive(pathname, currentSearch, c.href));
 }
 
 export function Sidebar({
@@ -138,7 +114,7 @@ export function Sidebar({
       const doc = new jsPDF();
 
       try {
-        const logoRes = await fetch("/logo.png");
+        const logoRes = await fetch("/favicon.png");
         const blob = await logoRes.blob();
         const logoDataUrl = await new Promise<string>((resolve, reject) => {
           const reader = new FileReader();
@@ -146,7 +122,7 @@ export function Sidebar({
           reader.onerror = reject;
           reader.readAsDataURL(blob);
         });
-        doc.addImage(logoDataUrl, "PNG", 14, 12, 12, 9);
+        doc.addImage(logoDataUrl, "PNG", 14, 10, 12, 12);
       } catch {
         // segue sem o logo caso a imagem não possa ser carregada
       }
@@ -199,6 +175,77 @@ export function Sidebar({
     }
   }
 
+  const GROUPS: NavGroup[] = [
+    {
+      kind: "group",
+      id: "financeiro",
+      label: "Financeiro",
+      icon: <Wallet size={18} strokeWidth={1.8} />,
+      children: [
+        { kind: "link", label: "Transações", icon: <ArrowLeftRight size={16} strokeWidth={1.8} />, href: "/dashboard/transactions" },
+        { kind: "link", label: "Contas", icon: <Landmark size={16} strokeWidth={1.8} />, href: "/dashboard/accounts" },
+        { kind: "link", label: "Cartões", icon: <CreditCard size={16} strokeWidth={1.8} />, href: "/dashboard/cards" },
+        { kind: "link", label: "Categorias", icon: <Tag size={16} strokeWidth={1.8} />, href: "/dashboard/categories" },
+      ],
+    },
+    {
+      kind: "group",
+      id: "planejamento",
+      label: "Planejamento",
+      icon: <Target size={18} strokeWidth={1.8} />,
+      children: [
+        { kind: "link", label: "Metas", icon: <Target size={16} strokeWidth={1.8} />, href: "/dashboard/goals" },
+        { kind: "link", label: "Reserva de Emergência", icon: <ShieldCheck size={16} strokeWidth={1.8} />, href: "/dashboard/goals" },
+        { kind: "link", label: "Investimentos", icon: <LineChart size={16} strokeWidth={1.8} />, href: "/dashboard/investments" },
+        { kind: "link", label: "Assinaturas", icon: <Repeat size={16} strokeWidth={1.8} />, href: "/dashboard/subscriptions" },
+      ],
+    },
+    {
+      kind: "group",
+      id: "relatorios",
+      label: "Relatórios",
+      icon: <BarChart3 size={18} strokeWidth={1.8} />,
+      children: [
+        { kind: "link", label: "Dashboard Financeiro", icon: <LayoutDashboard size={16} strokeWidth={1.8} />, href: "/dashboard/reports" },
+        { kind: "link", label: "Fluxo de Caixa", icon: <Activity size={16} strokeWidth={1.8} />, href: "/dashboard/reports" },
+        { kind: "link", label: "Receitas", icon: <TrendingUp size={16} strokeWidth={1.8} />, href: "/dashboard/reports" },
+        { kind: "link", label: "Despesas", icon: <TrendingDown size={16} strokeWidth={1.8} />, href: "/dashboard/reports" },
+        { kind: "link", label: "Categorias", icon: <Tag size={16} strokeWidth={1.8} />, href: "/dashboard/reports" },
+        { kind: "action", label: "Exportar CSV", icon: <Download size={16} strokeWidth={1.8} />, onClick: handleExport },
+        { kind: "action", label: "Exportar PDF", icon: <FileDown size={16} strokeWidth={1.8} />, onClick: handleExportPdf },
+      ],
+    },
+  ];
+
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => {
+    const initial: Record<string, boolean> = {};
+    for (const g of GROUPS) {
+      initial[g.id] = groupContainsActive(g, currentPath, currentSearch);
+    }
+    return initial;
+  });
+
+  // Ao navegar para uma rota dentro de um grupo, garante que ele apareça
+  // expandido — sem forçar o fechamento de grupos abertos manualmente.
+  useEffect(() => {
+    setOpenGroups((prev) => {
+      const next = { ...prev };
+      let changed = false;
+      for (const g of GROUPS) {
+        if (groupContainsActive(g, currentPath, currentSearch) && !next[g.id]) {
+          next[g.id] = true;
+          changed = true;
+        }
+      }
+      return changed ? next : prev;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPath, currentSearch]);
+
+  function toggleGroup(id: string) {
+    setOpenGroups((prev) => ({ ...prev, [id]: !prev[id] }));
+  }
+
   return (
     <aside className="dash-sidebar" style={{ position: "relative" }}>
       <button className="dash-collapse-btn" onClick={onToggleCollapse} aria-label="Recolher menu">
@@ -207,7 +254,7 @@ export function Sidebar({
 
       <div className="dash-brand">
         <div className="dash-logo">
-          <Image src="/logo.png" alt="JAD Finance" width={22} height={16} style={{ position: "relative", zIndex: 1 }} />
+          <Image src="/logo.png" alt="JAD Finance" width={24} height={24} />
         </div>
         <div className="dash-brand-text">
           <b>JAD FINANCE</b>
@@ -216,32 +263,74 @@ export function Sidebar({
       </div>
 
       <nav className="dash-nav">
-        {SECTIONS.map((section) => (
-          <div key={section.label}>
-            <div className="dash-section-label">{section.label}</div>
-            {section.items.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={`dash-item ${isActive(currentPath, currentSearch, item.href) ? "active" : ""}`}
+        {/* Dashboard — permanece simples, sem expandir */}
+        <div className="dash-section-label">Dashboard</div>
+        <Link
+          href="/dashboard"
+          className={`dash-item ${isActive(currentPath, currentSearch, "/dashboard") ? "active" : ""}`}
+        >
+          <LayoutGrid size={18} strokeWidth={1.8} />
+          <span className="label">Visão Geral</span>
+        </Link>
+        <div className="dash-divider" />
+
+        {/* Grupos expansíveis */}
+        {GROUPS.map((group) => {
+          const open = !!openGroups[group.id];
+          const hasActive = groupContainsActive(group, currentPath, currentSearch);
+          return (
+            <div key={group.id} className={`dash-group ${open ? "open" : ""}`}>
+              <button
+                type="button"
+                className={`dash-item dash-group-header ${hasActive ? "active" : ""}`}
+                onClick={() => toggleGroup(group.id)}
+                aria-expanded={open}
               >
-                {item.icon}
-                <span className="label">{item.label}</span>
-              </Link>
-            ))}
-          </div>
-        ))}
-        <div>
-          <div className="dash-section-label">Exportar</div>
-          <button type="button" className="dash-item" style={{ width: "100%", cursor: "pointer" }} onClick={handleExport}>
-            <Download size={18} strokeWidth={1.8} />
-            <span className="label">Exportar CSV</span>
-          </button>
-          <button type="button" className="dash-item" style={{ width: "100%", cursor: "pointer" }} onClick={handleExportPdf}>
-            <FileDown size={18} strokeWidth={1.8} />
-            <span className="label">Exportar PDF</span>
-          </button>
-        </div>
+                {group.icon}
+                <span className="label">{group.label}</span>
+                <ChevronDown size={15} strokeWidth={2} className="dash-group-chevron" />
+              </button>
+              <div className="dash-group-items">
+                <div className="dash-group-items-inner">
+                  {group.children.map((child) =>
+                    child.kind === "link" ? (
+                      <Link
+                        key={child.label}
+                        href={child.href}
+                        className={`dash-item dash-subitem ${isActive(currentPath, currentSearch, child.href) ? "active" : ""}`}
+                      >
+                        {child.icon}
+                        <span className="label">{child.label}</span>
+                      </Link>
+                    ) : (
+                      <button
+                        key={child.label}
+                        type="button"
+                        className="dash-item dash-subitem"
+                        style={{ cursor: "pointer" }}
+                        onClick={child.onClick}
+                      >
+                        {child.icon}
+                        <span className="label">{child.label}</span>
+                      </button>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+        <div className="dash-divider" />
+
+        {/* Patrimônio — simples, preparado para submenus futuros */}
+        <Link
+          href="/dashboard/accounts"
+          className={`dash-item ${currentPath.startsWith("/dashboard/accounts") ? "active" : ""}`}
+        >
+          <Building2 size={18} strokeWidth={1.8} />
+          <span className="label">Patrimônio</span>
+        </Link>
+        <div className="dash-divider" />
       </nav>
 
       <div className="dash-sb-footer">
