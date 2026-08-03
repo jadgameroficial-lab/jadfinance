@@ -8,7 +8,7 @@ export function Footer() {
         <div className="jf-foot-grid">
           <div className="jf-foot-brand">
             <div className="jf-logo">
-              <div className="jf-logo-mark"><Image src="/logo.png" alt="JAD Finance" width={28} height={28} /></div>
+              <div className="jf-logo-mark"><Image src="/favicon.png" alt="JAD Finance" width={26} height={26} /></div>
               <span className="jf-logo-word">JAD Finance</span>
             </div>
             <p>Controle financeiro premium para quem leva o próprio dinheiro a sério.</p>

@@ -147,8 +147,8 @@ html { scroll-behavior: smooth; }
 }
 .jf-nav.scrolled { background: rgba(255, 255, 255, 0.88); border-color: var(--border-strong); box-shadow: 0 16px 36px -16px rgba(18,22,31,0.16); }
 .jf-logo { display: flex; align-items: center; gap: 10px; }
-.jf-logo-mark { width: 28px; height: 28px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background: #0B1712; display: flex; align-items: center; justify-content: center; padding: 4px; }
-.jf-logo-mark img { width: 100%; height: 100%; object-fit: contain; }
+.jf-logo-mark { width: 26px; height: 26px; border-radius: 7px; overflow: hidden; flex-shrink: 0; }
+.jf-logo-mark img { width: 100%; height: 100%; object-fit: cover; }
 .jf-logo-word { font-family: var(--font-display, "Fraunces", serif); font-weight: 600; font-size: 15px; letter-spacing: 0.01em; }
 .jf-nav-links { display: flex; align-items: center; gap: 30px; font-size: 13.5px; color: var(--text-secondary); }
 .jf-nav-links a { transition: color 0.25s var(--ease); }
@@ -324,8 +324,8 @@ html { scroll-behavior: smooth; }
 .jf-price-card:hover { transform: translateY(-4px); border-color: rgba(173,124,36,0.4); box-shadow: 0 36px 70px -30px rgba(18,22,31,0.2); }
 .jf-price-card--featured { border-color: rgba(173,124,36,0.45); background: linear-gradient(165deg, rgba(173,124,36,0.06), var(--bg-elevated) 45%); box-shadow: 0 30px 60px -28px rgba(173,124,36,0.16), 0 24px 48px -32px rgba(18,22,31,0.14); }
 .jf-price-card--featured:hover { transform: translateY(-6px); box-shadow: 0 36px 70px -24px rgba(173,124,36,0.22), 0 30px 60px -30px rgba(18,22,31,0.18); }
-.jf-price-card--featured::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(140deg, rgba(173,124,36,0.55), transparent 30%, transparent 70%, rgba(173,124,36,0.3)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
-.jf-price-badge { display: inline-flex; align-self: center; max-width: 100%; box-sizing: border-box; margin: 0 0 20px; background: var(--gold); color: #241902; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 14px; border-radius: 100px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.jf-price-card--featured::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; z-index: 0; background: linear-gradient(140deg, rgba(173,124,36,0.55), transparent 30%, transparent 70%, rgba(173,124,36,0.3)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+.jf-price-badge { position: absolute; top: -17px; left: 50%; transform: translateX(-50%); z-index: 2; background: var(--gold); color: #241902; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 14px; border-radius: 100px; font-weight: 600; white-space: nowrap; box-shadow: 0 6px 16px -4px rgba(173,124,36,0.45); }
 .jf-price-name { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 18px; text-align: center; }
 .jf-price-val { font-family: var(--font-display, "Fraunces", serif); font-size: 46px; margin-bottom: 8px; text-align: center; }
 .jf-price-val span { font-family: var(--font-body); font-size: 14px; color: var(--text-secondary); font-weight: 400; }

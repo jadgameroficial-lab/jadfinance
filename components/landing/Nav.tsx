@@ -37,7 +37,7 @@ export function Nav() {
         <nav className={`jf-nav ${scrolled ? "scrolled" : ""}`}>
           <div className="jf-logo">
             <div className="jf-logo-mark">
-              <Image src="/logo.png" alt="JAD Finance" width={28} height={28} />
+              <Image src="/favicon.png" alt="JAD Finance" width={26} height={26} />
             </div>
             <span className="jf-logo-word">JAD Finance</span>
           </div>

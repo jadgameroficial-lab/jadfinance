@@ -27,7 +27,7 @@ export function Pricing() {
 
         <div className="jf-pricing-grid reveal">
           <div className="jf-price-card jf-price-card--featured jf-shimmer">
-            <span className="jf-price-badge">Assinatura Anual</span>
+            <span className="jf-price-badge">Plano único</span>
             <div className="jf-price-name">{PLAN.name}</div>
             <div className="jf-price-val">{PLAN.price}<span>{PLAN.period}</span></div>
             <div className="jf-price-desc">{PLAN.desc}</div>

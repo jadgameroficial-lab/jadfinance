@@ -31,7 +31,7 @@ function Sparkline({ values, color }: { values: number[]; color: string }) {
 
   const linePath = smoothPath(points);
   const areaPath = `${linePath} L ${width},${height} L 0,${height} Z`;
-  const gradientId = `spark-${color.replace("#", "")}`;
+  const gradientId = `spark-${color.replace(/[^a-zA-Z0-9]/g, "")}`;
 
   return (
     <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" style={{ overflow: "visible" }}>

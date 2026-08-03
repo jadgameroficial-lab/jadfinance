@@ -254,7 +254,7 @@ export function Sidebar({
 
       <div className="dash-brand">
         <div className="dash-logo">
-          <Image src="/logo.png" alt="JAD Finance" width={24} height={24} />
+          <Image src="/logo.png" alt="JAD Finance" width={26} height={26} />
         </div>
         <div className="dash-brand-text">
           <b>JAD FINANCE</b>

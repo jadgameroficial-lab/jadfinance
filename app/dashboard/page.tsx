@@ -88,26 +88,26 @@ export default function DashboardPage() {
       <div className="dash-kpi-grid">
         <KpiCard
           label="Saldo total" value={loading ? 0 : Math.round(data?.kpis.totalBalance ?? 0)}
-          delta={formatPct(profitDelta)} direction={profitDelta >= 0 ? "up" : "down"} color="var(--gold)"
-          icon={<Wallet size={18} strokeWidth={1.8} color="var(--gold)" />}
+          delta={formatPct(profitDelta)} direction={profitDelta >= 0 ? "up" : "down"} color="#AD7C24"
+          icon={<Wallet size={18} strokeWidth={1.8} color="#AD7C24" />}
           spark={profitSpark} flagship delay={0.05} sheenDelay={0} loading={loading}
         />
         <KpiCard
           label="Receitas" value={loading ? 0 : Math.round(data?.kpis.monthIncome ?? 0)}
-          delta={formatPct(incomeDelta)} direction={incomeDelta >= 0 ? "up" : "down"} color="var(--green)"
-          icon={<TrendingUp size={18} strokeWidth={1.8} color="var(--green)" />}
+          delta={formatPct(incomeDelta)} direction={incomeDelta >= 0 ? "up" : "down"} color="#1C8F5C"
+          icon={<TrendingUp size={18} strokeWidth={1.8} color="#1C8F5C" />}
           spark={incomeSpark} delay={0.1} sheenDelay={0.6} loading={loading}
         />
         <KpiCard
           label="Despesas" value={loading ? 0 : Math.round(data?.kpis.monthExpense ?? 0)}
-          delta={formatPct(expenseDelta)} direction={expenseDelta >= 0 ? "up" : "down"} color="var(--red)"
-          icon={<TrendingDown size={18} strokeWidth={1.8} color="var(--red)" />}
+          delta={formatPct(expenseDelta)} direction={expenseDelta >= 0 ? "up" : "down"} color="#D6483D"
+          icon={<TrendingDown size={18} strokeWidth={1.8} color="#D6483D" />}
           spark={expenseSpark} delay={0.15} sheenDelay={1.4} loading={loading}
         />
         <KpiCard
           label="Economia do mês" value={loading ? 0 : Math.round(data?.kpis.monthProfit ?? 0)}
-          delta={formatPct(profitDelta)} direction={profitDelta >= 0 ? "up" : "down"} color="var(--blue)"
-          icon={<PiggyBank size={18} strokeWidth={1.8} color="var(--blue)" />}
+          delta={formatPct(profitDelta)} direction={profitDelta >= 0 ? "up" : "down"} color="#3562C9"
+          icon={<PiggyBank size={18} strokeWidth={1.8} color="#3562C9" />}
           spark={profitSpark} delay={0.2} sheenDelay={2.2} loading={loading}
         />
       </div>
