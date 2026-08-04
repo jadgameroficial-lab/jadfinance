@@ -10,7 +10,6 @@ import { Benefits } from "@/components/landing/Benefits";
 import { ProductShowcase } from "@/components/landing/ProductShowcase";
 import { Features } from "@/components/landing/Features";
 import { HowItWorks } from "@/components/landing/HowItWorks";
-import { Security } from "@/components/landing/Security";
 import { Testimonials } from "@/components/landing/Testimonials";
 import { Pricing } from "@/components/landing/Pricing";
 import { FAQ } from "@/components/landing/FAQ";
@@ -57,7 +56,6 @@ export default function LandingPage() {
       <ProductShowcase />
       <Features />
       <HowItWorks />
-      <Security />
       <Testimonials />
       <Pricing />
       <FAQ />

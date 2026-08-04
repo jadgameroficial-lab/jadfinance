@@ -7,7 +7,6 @@ const LINKS = [
   { href: "#showcase", label: "Produto" },
   { href: "#features", label: "Recursos" },
   { href: "#pricing", label: "Planos" },
-  { href: "#security", label: "Segurança" },
 ];
 
 export function Nav() {

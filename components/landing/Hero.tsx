@@ -32,11 +32,6 @@ export function Hero() {
 
         <HeroVisual />
       </div>
-
-      <div className="jf-scroll-cue">
-        <span>Role</span>
-        <span className="line" />
-      </div>
     </section>
   );
 }
