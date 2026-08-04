@@ -454,3 +454,38 @@
 @media (max-width:520px){
   .dash-kpi-grid{ grid-template-columns:1fr; }
 }
+
+/* ================= GOALS (Metas) ================= */
+.dash-goal-card{ display:flex; flex-direction:column; gap:14px; }
+.dash-goal-card-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+.dash-goal-card-id{ display:flex; align-items:center; gap:12px; min-width:0; }
+.dash-goal-card-name{ font-family:var(--display); font-size:14.5px; font-weight:700; color:var(--white);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.dash-goal-card-category{ font-size:11.5px; color:var(--text-ter); margin-top:2px; }
+.dash-goal-badges{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.dash-goal-meta{ display:flex; align-items:center; gap:6px; font-size:11.5px; color:var(--text-sec); }
+.dash-goal-meta svg{ color:var(--text-ter); flex-shrink:0; }
+.dash-goal-add-btn{ display:flex; align-items:center; justify-content:center; gap:6px; padding:9px 12px;
+  border-radius:9px; border:1px solid var(--border-strong); background:var(--surface-3); color:var(--text-sec);
+  font-size:12px; font-weight:600; width:100%; }
+.dash-goal-add-btn:hover{ background:#E7EAEF; color:var(--white); }
+
+/* Prioridade da meta: mesma linguagem visual dos status badges, cores próprias. */
+.dash-priority-badge{ font-size:10px; font-weight:600; padding:4px 9px; border-radius:100px; display:inline-block; white-space:nowrap; }
+.dash-priority-badge.baixa{ color:var(--blue); background:var(--blue-dim); }
+.dash-priority-badge.media{ color:var(--gold-deep); background:var(--gold-dim); }
+.dash-priority-badge.alta{ color:var(--red); background:var(--red-dim); }
+
+/* Terceira variante de status (além de .ok/.pending já existentes) para "Atrasada",
+   que não existe no banco — é calculada na UI a partir de deadline + status. */
+.dash-status-badge.danger{ color:var(--red); background:var(--red-dim); }
+
+/* Barra de progresso reutilizável (GoalProgress) */
+.dash-goal-progress{ display:flex; flex-direction:column; gap:8px; }
+.dash-goal-progress-head{ display:flex; align-items:baseline; justify-content:flex-end; }
+.dash-goal-progress-pct{ font-family:var(--mono); font-size:15px; font-weight:600; color:var(--white); }
+.dash-goal-progress-track{ height:8px; border-radius:100px; background:var(--surface-3); overflow:hidden; }
+.dash-goal-progress-fill{ height:100%; border-radius:100px; transition:width .5s var(--ease); }
+.dash-goal-progress-values{ display:flex; align-items:center; justify-content:space-between; font-size:11.5px;
+  color:var(--text-ter); font-family:var(--mono); }
+.dash-goal-progress-values b{ color:var(--white); font-weight:500; }
