@@ -47,7 +47,7 @@ function TransactionsTableBase({
   initialSearch?: string;
 }) {
   const toast = useToast();
-  const { openEditTransaction, registerRefresh } = useDashboardContext();
+  const { openEditTransaction, registerRefresh, refreshAll } = useDashboardContext();
   const { categories } = useCategories();
   const { accounts } = useAccounts();
 
@@ -75,8 +75,7 @@ function TransactionsTableBase({
   const { transactions, loading, error, refresh, loadMore, hasMore } = useTransactions(filters);
 
   useEffect(() => {
-    registerRefresh(refresh);
-    return () => registerRefresh(null);
+    return registerRefresh(refresh);
   }, [registerRefresh, refresh]);
 
   const categoryById = useMemo(() => new Map(categories.map((c) => [c.id, c])), [categories]);
@@ -89,7 +88,9 @@ function TransactionsTableBase({
       await transactionsService.delete(deleteTarget.id);
       toast.success("Transação excluída.");
       setDeleteTarget(null);
-      refresh();
+      // Dispara todos os painéis (não só esta tabela), já que excluir uma
+      // despesa também muda KPIs, fluxo de caixa e o gráfico por categoria.
+      refreshAll();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Erro ao excluir transação.");
     } finally {

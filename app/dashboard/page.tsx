@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Wallet, TrendingUp, TrendingDown, PiggyBank, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
@@ -11,6 +11,7 @@ import { CashflowChart } from "@/components/dashboard/CashflowChart";
 import { CategoryDonut } from "@/components/dashboard/CategoryDonut";
 import { TransactionsTable } from "@/components/dashboard/TransactionsTable";
 import { useToast } from "@/lib/toast";
+import { useDashboardContext } from "@/lib/dashboard-context";
 
 function pctChange(curr: number, prev: number): number {
   if (prev === 0) return curr === 0 ? 0 : 100;
@@ -25,8 +26,17 @@ export default function DashboardPage() {
   const router = useRouter();
   const toast = useToast();
   const { user, loading: authLoading } = useAuth();
-  const { data, loading, error } = useDashboardData();
+  const { data, loading, error, refresh } = useDashboardData();
+  const { registerRefresh } = useDashboardContext();
   const [loggingOut, setLoggingOut] = useState(false);
+
+  // Mantém KPIs, fluxo de caixa e o gráfico de despesas por categoria em
+  // sincronia com a drawer global de transação: ao criar, editar ou excluir
+  // uma transação em qualquer lugar do app, este painel também é atualizado
+  // automaticamente, sem exigir refresh da página.
+  useEffect(() => {
+    return registerRefresh(refresh);
+  }, [registerRefresh, refresh]);
 
   const displayName = (user?.user_metadata?.full_name as string) || user?.email || "Usuário";
   const firstName = displayName.split(" ")[0];

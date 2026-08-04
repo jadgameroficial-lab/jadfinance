@@ -40,10 +40,17 @@ function isActive(pathname: string, currentSearch: string, href: string) {
   }
 
   // Mesma rota: itens que compartilham o mesmo pathname só se diferenciam
-  // pelo parâmetro "type" da URL.
-  const hrefType = new URLSearchParams(hrefQuery).get("type");
-  const currentType = new URLSearchParams(currentSearch).get("type");
-  return hrefType === currentType;
+  // pelos parâmetros que o próprio item define na URL — cada parâmetro
+  // declarado no href do item precisa bater exatamente com a URL atual,
+  // garantindo que só o item clicado fique ativo (nunca os irmãos do grupo).
+  const hrefParams = new URLSearchParams(hrefQuery);
+  if ([...hrefParams.keys()].length === 0) return true;
+
+  const currentParams = new URLSearchParams(currentSearch);
+  for (const [key, value] of hrefParams.entries()) {
+    if (currentParams.get(key) !== value) return false;
+  }
+  return true;
 }
 
 function groupContainsActive(group: NavGroup, pathname: string, currentSearch: string) {
@@ -194,8 +201,8 @@ export function Sidebar({
       label: "Planejamento",
       icon: <Target size={18} strokeWidth={1.8} />,
       children: [
-        { kind: "link", label: "Metas", icon: <Target size={16} strokeWidth={1.8} />, href: "/dashboard/goals" },
-        { kind: "link", label: "Reserva de Emergência", icon: <ShieldCheck size={16} strokeWidth={1.8} />, href: "/dashboard/goals" },
+        { kind: "link", label: "Metas", icon: <Target size={16} strokeWidth={1.8} />, href: "/dashboard/goals?view=metas" },
+        { kind: "link", label: "Reserva de Emergência", icon: <ShieldCheck size={16} strokeWidth={1.8} />, href: "/dashboard/goals?view=emergencia" },
         { kind: "link", label: "Investimentos", icon: <LineChart size={16} strokeWidth={1.8} />, href: "/dashboard/investments" },
         { kind: "link", label: "Assinaturas", icon: <Repeat size={16} strokeWidth={1.8} />, href: "/dashboard/subscriptions" },
       ],
@@ -206,11 +213,11 @@ export function Sidebar({
       label: "Relatórios",
       icon: <BarChart3 size={18} strokeWidth={1.8} />,
       children: [
-        { kind: "link", label: "Dashboard Financeiro", icon: <LayoutDashboard size={16} strokeWidth={1.8} />, href: "/dashboard/reports" },
-        { kind: "link", label: "Fluxo de Caixa", icon: <Activity size={16} strokeWidth={1.8} />, href: "/dashboard/reports" },
-        { kind: "link", label: "Receitas", icon: <TrendingUp size={16} strokeWidth={1.8} />, href: "/dashboard/reports" },
-        { kind: "link", label: "Despesas", icon: <TrendingDown size={16} strokeWidth={1.8} />, href: "/dashboard/reports" },
-        { kind: "link", label: "Categorias", icon: <Tag size={16} strokeWidth={1.8} />, href: "/dashboard/reports" },
+        { kind: "link", label: "Dashboard Financeiro", icon: <LayoutDashboard size={16} strokeWidth={1.8} />, href: "/dashboard/reports?view=dashboard" },
+        { kind: "link", label: "Fluxo de Caixa", icon: <Activity size={16} strokeWidth={1.8} />, href: "/dashboard/reports?view=fluxo-de-caixa" },
+        { kind: "link", label: "Receitas", icon: <TrendingUp size={16} strokeWidth={1.8} />, href: "/dashboard/reports?view=receitas" },
+        { kind: "link", label: "Despesas", icon: <TrendingDown size={16} strokeWidth={1.8} />, href: "/dashboard/reports?view=despesas" },
+        { kind: "link", label: "Categorias", icon: <Tag size={16} strokeWidth={1.8} />, href: "/dashboard/reports?view=categorias" },
         { kind: "action", label: "Exportar CSV", icon: <Download size={16} strokeWidth={1.8} />, onClick: handleExport },
         { kind: "action", label: "Exportar PDF", icon: <FileDown size={16} strokeWidth={1.8} />, onClick: handleExportPdf },
       ],
