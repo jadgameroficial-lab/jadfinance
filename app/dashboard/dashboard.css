@@ -445,6 +445,12 @@
   .dash-drawer{ width:100%; max-width:100vw; padding:22px 18px; padding-top:calc(22px + env(safe-area-inset-top));
     padding-bottom:calc(22px + env(safe-area-inset-bottom)); }
 
+  /* ---- modais centralizados também ficam full-width, com alvos de toque maiores ---- */
+  .dash-modal{ max-width:100% !important; }
+  .dash-modal-close{ width:40px; height:40px; }
+  .dash-icon-picker{ grid-template-columns:repeat(5,1fr); }
+  .dash-icon-picker button{ min-height:44px; }
+
   /* ---- grids que eram fixos em várias colunas no desktop viram 1 coluna ---- */
   .dash-kpi-grid{ grid-template-columns:1fr 1fr; gap:12px; }
   .dash-page-head{ align-items:flex-start; }
@@ -479,6 +485,49 @@
 /* Terceira variante de status (além de .ok/.pending já existentes) para "Atrasada",
    que não existe no banco — é calculada na UI a partir de deadline + status. */
 .dash-status-badge.danger{ color:var(--red); background:var(--red-dim); }
+/* Quarta variante, neutra, usada só para sinalizar "Arquivada" no card. */
+.dash-status-badge.neutral{ color:var(--text-sec); background:var(--surface-3); }
+
+/* Selo de meta concluída (substitui a linha de "valor restante" no card). */
+.dash-goal-seal{ display:inline-flex; align-items:center; gap:7px; font-size:11.5px; font-weight:700;
+  color:var(--green); background:var(--green-dim); padding:8px 12px; border-radius:10px; }
+
+/* Destaque quando faltam menos de 30 dias (ou já está atrasada) para o prazo. */
+.dash-goal-urgent{ color:var(--red); font-weight:600; }
+.dash-goal-urgent svg{ color:var(--red) !important; }
+
+/* Modal centralizado (criação/edição de meta, aportes) — mesma linguagem visual
+   do ConfirmDialog já existente, só que reutilizável via classes CSS por ser
+   maior/rolável (mais campos). */
+.dash-modal-backdrop{ position:fixed; inset:0; background:rgba(15,18,24,0.45); backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px); z-index:120; display:flex; align-items:center; justify-content:center;
+  padding:20px; animation:dashConfirmFade .2s var(--ease); }
+.dash-modal{ background:var(--surface-1); border:1px solid var(--border); border-radius:var(--r-lg);
+  box-shadow:var(--shadow-lg); width:100%; max-height:88vh; display:flex; flex-direction:column;
+  animation:dashConfirmPop .25s var(--ease-spring); }
+.dash-modal-head{ display:flex; align-items:center; justify-content:space-between; padding:22px 24px 0; flex-shrink:0; }
+.dash-modal-head h3{ font-family:var(--display); font-size:17px; font-weight:700; color:var(--white); }
+.dash-modal-body{ padding:18px 24px 24px; overflow-y:auto; }
+.dash-modal-close{ width:32px; height:32px; border-radius:9px; border:1px solid var(--border); background:var(--surface-3);
+  display:flex; align-items:center; justify-content:center; color:var(--text-sec); flex-shrink:0; }
+.dash-modal-close:hover{ color:var(--white); background:#E7EAEF; }
+
+/* Seletor de ícone da meta (grade de botões). */
+.dash-icon-picker{ display:grid; grid-template-columns:repeat(6,1fr); gap:8px; }
+.dash-icon-picker button{ aspect-ratio:1; border-radius:10px; border:1px solid var(--border); background:var(--surface-3);
+  display:flex; align-items:center; justify-content:center; color:var(--text-sec); transition:transform .2s var(--ease-spring), background .2s var(--ease), border-color .2s var(--ease); }
+.dash-icon-picker button:hover{ background:#E7EAEF; color:var(--white); }
+.dash-icon-picker button.active{ border-color:rgba(173,124,36,0.5); background:var(--gold-dim); color:var(--gold-deep); }
+
+/* Item de aporte dentro do histórico (ContributionHistory). */
+.dash-goal-contrib-item{ display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:11px 0; border-bottom:1px solid var(--border); }
+.dash-goal-contrib-item:last-child{ border-bottom:none; }
+.dash-goal-contrib-action{ width:28px; height:28px; border-radius:8px; border:1px solid var(--border);
+  background:var(--surface-3); display:flex; align-items:center; justify-content:center; color:var(--text-sec); }
+.dash-goal-contrib-action:hover{ color:var(--white); background:#E7EAEF; }
+.dash-goal-contrib-action.danger:hover{ color:var(--red); background:var(--red-dim); }
+.dash-goal-contrib-action:disabled{ opacity:0.5; pointer-events:none; }
 
 /* Barra de progresso reutilizável (GoalProgress) */
 .dash-goal-progress{ display:flex; flex-direction:column; gap:8px; }

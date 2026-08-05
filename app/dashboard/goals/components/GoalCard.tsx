@@ -1,9 +1,10 @@
 "use client";
 
-import { Calendar, Clock, AlertTriangle, Pencil, PiggyBank, Archive, Trash2, Target } from "lucide-react";
+import { Calendar, Clock, AlertTriangle, Pencil, PiggyBank, Archive, ArchiveRestore, Trash2, CheckCircle2 } from "lucide-react";
 import type { GoalRow } from "@/services/goals.service";
 import { CardMenu } from "@/components/dashboard/CardMenu";
-import { GoalProgress } from "./GoalProgress";
+import { GoalProgress, formatCurrency } from "./GoalProgress";
+import { GOAL_ICON_MAP } from "./GoalFormModal";
 
 export type GoalDisplayStatus = "em_andamento" | "concluida" | "atrasada";
 
@@ -18,6 +19,9 @@ const STATUS_CONFIG: Record<GoalDisplayStatus, { label: string; badgeClass: stri
   concluida: { label: "Concluída", badgeClass: "ok" },
   atrasada: { label: "Atrasada", badgeClass: "danger" },
 };
+
+/** Meta a partir da qual os "dias restantes" passam a ser destacados como urgentes. */
+const URGENT_THRESHOLD_DAYS = 30;
 
 function todayIso() {
   return new Date().toISOString().slice(0, 10);
@@ -49,31 +53,40 @@ export function daysUntilDeadline(deadline: string | null): number | null {
   return Math.round((target.getTime() - today.getTime()) / 86_400_000);
 }
 
-export function GoalCard({ goal }: { goal: GoalRow }) {
+export function GoalCard({
+  goal,
+  busy,
+  onEdit,
+  onAddContribution,
+  onArchiveToggle,
+  onDelete,
+}: {
+  goal: GoalRow;
+  /** true enquanto uma ação (ex.: arquivar) está em andamento para esta meta. */
+  busy?: boolean;
+  onEdit: (goal: GoalRow) => void;
+  onAddContribution: (goal: GoalRow) => void;
+  onArchiveToggle: (goal: GoalRow) => void;
+  onDelete: (goal: GoalRow) => void;
+}) {
   const displayStatus = resolveGoalDisplayStatus(goal);
   const statusConfig = STATUS_CONFIG[displayStatus];
   const daysLeft = daysUntilDeadline(goal.deadline);
   const accentColor = goal.color ?? "var(--gold)";
-
-  // As ações abaixo ainda não têm implementação nesta etapa — só a
-  // estrutura visual. Serão conectadas a modais/drawers e às ações de
-  // useGoals() (updateGoal, archiveGoal/restoreGoal, deleteGoal,
-  // addContribution) em uma etapa futura.
-  // TODO: abrir modal/drawer de edição da meta
-  function handleEdit() {}
-  // TODO: abrir modal/drawer de novo aporte
-  function handleAddContribution() {}
-  // TODO: chamar archiveGoal()/restoreGoal() de useGoals()
-  function handleArchive() {}
-  // TODO: abrir confirmação e chamar deleteGoal() de useGoals()
-  function handleDelete() {}
+  const Icon = GOAL_ICON_MAP[goal.icon ?? ""] ?? GOAL_ICON_MAP.target;
+  const remaining = Math.max(0, goal.target_amount - goal.current_amount);
+  const isConcluded = goal.status === "concluida";
+  const isUrgent = displayStatus === "em_andamento" && daysLeft !== null && daysLeft >= 0 && daysLeft < URGENT_THRESHOLD_DAYS;
 
   return (
-    <div className="dash-kpi dash-goal-card dash-reveal">
+    <div
+      className="dash-kpi dash-goal-card dash-reveal"
+      style={busy ? { opacity: 0.55, pointerEvents: "none" } : undefined}
+    >
       <div className="dash-goal-card-top">
         <div className="dash-goal-card-id">
           <div className="dash-tx-icon" style={{ background: `${accentColor}22`, color: accentColor }}>
-            <Target size={17} strokeWidth={1.8} />
+            <Icon size={17} strokeWidth={1.8} />
           </div>
           <div style={{ minWidth: 0 }}>
             <div className="dash-goal-card-name">{goal.name}</div>
@@ -83,13 +96,13 @@ export function GoalCard({ goal }: { goal: GoalRow }) {
 
         <CardMenu
           actions={[
-            { label: "Editar", icon: <Pencil size={13} strokeWidth={2} />, onClick: handleEdit },
+            { label: "Editar", icon: <Pencil size={13} strokeWidth={2} />, onClick: () => onEdit(goal) },
             {
-              label: goal.is_archived ? "Desarquivar" : "Arquivar",
-              icon: <Archive size={13} strokeWidth={2} />,
-              onClick: handleArchive,
+              label: goal.is_archived ? "Restaurar" : "Arquivar",
+              icon: goal.is_archived ? <ArchiveRestore size={13} strokeWidth={2} /> : <Archive size={13} strokeWidth={2} />,
+              onClick: () => onArchiveToggle(goal),
             },
-            { label: "Excluir", icon: <Trash2 size={13} strokeWidth={2} />, onClick: handleDelete, danger: true },
+            { label: "Excluir", icon: <Trash2 size={13} strokeWidth={2} />, onClick: () => onDelete(goal), danger: true },
           ]}
         />
       </div>
@@ -97,17 +110,30 @@ export function GoalCard({ goal }: { goal: GoalRow }) {
       <div className="dash-goal-badges">
         <span className={`dash-status-badge ${statusConfig.badgeClass}`}>{statusConfig.label}</span>
         <span className={`dash-priority-badge ${goal.priority}`}>{PRIORITY_LABEL[goal.priority]}</span>
+        {goal.is_archived && <span className="dash-status-badge neutral">Arquivada</span>}
       </div>
 
       <GoalProgress current={goal.current_amount} target={goal.target_amount} color={goal.color} />
+
+      {isConcluded ? (
+        <div className="dash-goal-seal">
+          <CheckCircle2 size={13} strokeWidth={2} />
+          Meta concluída{goal.completed_at ? ` em ${formatDate(goal.completed_at.slice(0, 10))}` : ""}
+        </div>
+      ) : (
+        <div className="dash-goal-meta">
+          <PiggyBank size={13} strokeWidth={1.8} />
+          <span>Faltam R$ {formatCurrency(remaining)}</span>
+        </div>
+      )}
 
       <div className="dash-goal-meta">
         <Calendar size={13} strokeWidth={1.8} />
         <span>{goal.deadline ? formatDate(goal.deadline) : "Sem prazo definido"}</span>
       </div>
 
-      {goal.deadline && goal.status !== "concluida" && (
-        <div className="dash-goal-meta">
+      {goal.deadline && !isConcluded && (
+        <div className={`dash-goal-meta${isUrgent || displayStatus === "atrasada" ? " dash-goal-urgent" : ""}`}>
           {displayStatus === "atrasada" ? (
             <AlertTriangle size={13} strokeWidth={1.8} />
           ) : (
@@ -121,7 +147,7 @@ export function GoalCard({ goal }: { goal: GoalRow }) {
         </div>
       )}
 
-      <button type="button" className="dash-goal-add-btn" onClick={handleAddContribution}>
+      <button type="button" className="dash-goal-add-btn" onClick={() => onAddContribution(goal)}>
         <PiggyBank size={14} strokeWidth={1.8} />
         Adicionar aporte
       </button>

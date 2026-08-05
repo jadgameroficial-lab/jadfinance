@@ -2,14 +2,8 @@
 
 import { Plus } from "lucide-react";
 
-/**
- * Cabeçalho da página de Metas: título, descrição e botão de criação.
- * O botão ainda não abre nenhum modal — isso entra em uma etapa futura.
- */
-export function GoalsHeader() {
-  // TODO: abrir modal/drawer de criação de meta (próxima etapa)
-  function handleNewGoal() {}
-
+/** Cabeçalho da página de Metas: título, descrição e botão de criação. */
+export function GoalsHeader({ onNewGoal }: { onNewGoal: () => void }) {
   return (
     <div className="dash-page-head dash-reveal">
       <div>
@@ -17,7 +11,7 @@ export function GoalsHeader() {
         <p>Acompanhe seus objetivos financeiros e a evolução das suas metas.</p>
       </div>
       <div className="dash-head-meta">
-        <button className="dash-btn-gold" onClick={handleNewGoal} type="button">
+        <button className="dash-btn-gold" onClick={onNewGoal} type="button">
           <span className="shine" />
           <Plus size={15} strokeWidth={2.5} />
           Nova Meta
