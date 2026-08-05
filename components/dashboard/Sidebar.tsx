@@ -202,7 +202,7 @@ export function Sidebar({
       icon: <Target size={18} strokeWidth={1.8} />,
       children: [
         { kind: "link", label: "Metas", icon: <Target size={16} strokeWidth={1.8} />, href: "/dashboard/goals?view=metas" },
-        { kind: "link", label: "Reserva de Emergência", icon: <ShieldCheck size={16} strokeWidth={1.8} />, href: "/dashboard/goals?view=emergencia" },
+        { kind: "link", label: "Reserva de Emergência", icon: <ShieldCheck size={16} strokeWidth={1.8} />, href: "/dashboard/emergency-fund" },
         { kind: "link", label: "Investimentos", icon: <LineChart size={16} strokeWidth={1.8} />, href: "/dashboard/investments" },
         { kind: "link", label: "Assinaturas", icon: <Repeat size={16} strokeWidth={1.8} />, href: "/dashboard/subscriptions" },
       ],
